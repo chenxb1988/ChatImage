@@ -37,26 +37,18 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.back04, R.drawable.back05, R.drawable.back06,
             R.drawable.back07, R.drawable.back08, R.drawable.back09,
             R.drawable.back10, R.drawable.back11, R.drawable.back12,
-            R.drawable.back13, R.drawable.back14, R.drawable.back15,
-            R.drawable.back16, R.drawable.back17, R.drawable.back18,
-            R.drawable.back19, R.drawable.back20, R.drawable.back21,
-            R.drawable.back22, R.drawable.back23, R.drawable.back24,
-            R.drawable.back25, R.drawable.back26, R.drawable.back27,
-            R.drawable.back28, R.drawable.back29, R.drawable.back30,
-            R.drawable.back31, R.drawable.back32,
-            R.drawable.back34, R.drawable.back35, R.drawable.back36,
-            R.drawable.back37, R.drawable.back38, R.drawable.back39,
-            R.drawable.back40, R.drawable.back41, R.drawable.back42,
+            R.drawable.back13, R.drawable.back17, R.drawable.back21,
+            R.drawable.back22, R.drawable.back29, R.drawable.back48,
+            R.drawable.back34, R.drawable.back35, R.drawable.back38,
+            R.drawable.back39, R.drawable.back41, R.drawable.back42,
             R.drawable.back43, R.drawable.back44, R.drawable.back45,
-            R.drawable.back46, R.drawable.back47, R.drawable.back48,
-            R.drawable.back49, R.drawable.back50, R.drawable.back51,
+            R.drawable.back50, R.drawable.back51, R.drawable.back58,
             R.drawable.back52, R.drawable.back53, R.drawable.back54,
-            R.drawable.back55, R.drawable.back56, R.drawable.back57,
-            R.drawable.back58};
+            R.drawable.back55, R.drawable.back56, R.drawable.back57};
     private ImageView image;
     private TextView text;
     private EditText web, edit;
-    private CheckBox checkBox;
+    private CheckBox checkBox, cbAiwu;
     private int timeDelay = 60;
     private File folder;
     private String msgPath;
@@ -71,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         web = (EditText) findViewById(R.id.et_web);
         edit = (EditText) findViewById(R.id.et_code);
         checkBox = (CheckBox) findViewById(R.id.cb_preview);
+        cbAiwu = (CheckBox) findViewById(R.id.cb_aiwu);
 
         createFolder();
         findViewById(R.id.btn_generate).setOnClickListener(new View.OnClickListener() {
@@ -142,8 +135,13 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap message = BitmapFactory.decodeFile(msgPath);
         if (message == null) {
-            message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg);
-            canvas.drawBitmap(message, 440 - x, 275 - y, paintb);
+            if (cbAiwu.isChecked()) {
+                message = BitmapFactory.decodeResource(getResources(), R.drawable.message_25);
+                canvas.drawBitmap(message, 480 - x, 275 - y, paintb);
+            } else {
+                message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg);
+                canvas.drawBitmap(message, 440 - x, 275 - y, paintb);
+            }
         } else {
             Bitmap bitmap = Bitmap.createScaledBitmap(message,
                     (int) (message.getWidth() * 1.5), (int) (message.getHeight() * 1.5), true);
@@ -173,21 +171,31 @@ public class MainActivity extends AppCompatActivity {
         textPaint.setAntiAlias(true);
         textPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 
-        String str = web.getText() + "  " + edit.getText();
-        SpannableString content = new SpannableString(str);
-        try {
-            int start = str.indexOf("http");
-            content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            content.setSpan(new UnderlineSpan(), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } catch (Exception e) {
+        SpannableString content;
+        if (cbAiwu.isChecked()) {
+            content = new SpannableString(getString(R.string.content_aiwu));
+        } else {
+            String str = web.getText() + "  " + edit.getText();
+            content = new SpannableString(str);
+            try {
+                int start = str.indexOf("http");
+                content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                content.setSpan(new UnderlineSpan(), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } catch (Exception e) {
 
+            }
         }
 
         StaticLayout layout = new StaticLayout(content, textPaint, 1000, Layout.Alignment.ALIGN_NORMAL, 1.4F, 1.0F, true);
         // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行
         canvas.save();
-        canvas.translate(600 - x - getResources().getInteger(R.integer.code_x),
-                400 - y - getResources().getInteger(R.integer.code_y));
+        if (cbAiwu.isChecked()) {
+            canvas.translate(590 - x - getResources().getInteger(R.integer.code_x),
+                    400 - y - getResources().getInteger(R.integer.code_y));
+        } else {
+            canvas.translate(600 - x - getResources().getInteger(R.integer.code_x),
+                    400 - y - getResources().getInteger(R.integer.code_y));
+        }
         layout.draw(canvas);
         canvas.restore();//别忘了restore
 //        canvas.drawText(,

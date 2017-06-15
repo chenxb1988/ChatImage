@@ -39,8 +39,16 @@
                 android:id="@+id/cb_preview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="80dp"
                 android:text="预览"/>
+
+            <CheckBox
+                android:id="@+id/cb_aiwu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:visibility="gone"
+                android:text="爱吾"/>
         </LinearLayout>
 
         <TextView
