@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
         paint.setTextSize(20);
         paint.setColor(getResources().getColor(R.color.textColorName));
-        canvas.drawText("风云", 1050 - x, 290 - y, paint);
+        canvas.drawText("生如夏花", 1000 - x, 290 - y, paint);
 
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(getResources().getColor(R.color.codeTextColor));
