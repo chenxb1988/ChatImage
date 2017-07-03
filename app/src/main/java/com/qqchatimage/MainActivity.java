@@ -136,10 +136,10 @@ public class MainActivity extends AppCompatActivity {
         Bitmap message = BitmapFactory.decodeFile(msgPath);
         if (message == null) {
             if (cbAiwu.isChecked()) {
-                message = BitmapFactory.decodeResource(getResources(), R.drawable.message_25);
+                message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg);
                 canvas.drawBitmap(message, 480 - x, 275 - y, paintb);
             } else {
-                message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg);
+                message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg2);
                 canvas.drawBitmap(message, 440 - x, 275 - y, paintb);
             }
         } else {
@@ -163,7 +163,11 @@ public class MainActivity extends AppCompatActivity {
 
         paint.setTextSize(20);
         paint.setColor(getResources().getColor(R.color.textColorName));
-        canvas.drawText("生如夏花", 1000 - x, 290 - y, paint);
+        if (cbAiwu.isChecked()) {
+            canvas.drawText("风云", 1050 - x, 290 - y, paint);
+        } else {
+            canvas.drawText("生如夏花", 1000 - x, 290 - y, paint);
+        }
 
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(getResources().getColor(R.color.codeTextColor));
@@ -171,31 +175,22 @@ public class MainActivity extends AppCompatActivity {
         textPaint.setAntiAlias(true);
         textPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 
-        SpannableString content;
-        if (cbAiwu.isChecked()) {
-            content = new SpannableString(getString(R.string.content_aiwu));
-        } else {
-            String str = web.getText() + "  " + edit.getText();
-            content = new SpannableString(str);
-            try {
-                int start = str.indexOf("http");
-                content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                content.setSpan(new UnderlineSpan(), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            } catch (Exception e) {
 
-            }
+        String str = web.getText() + "  " + edit.getText();
+        SpannableString content = new SpannableString(str);
+        try {
+            int start = str.indexOf("http");
+            content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            content.setSpan(new UnderlineSpan(), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } catch (Exception e) {
+
         }
 
         StaticLayout layout = new StaticLayout(content, textPaint, 1000, Layout.Alignment.ALIGN_NORMAL, 1.4F, 1.0F, true);
         // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行
         canvas.save();
-        if (cbAiwu.isChecked()) {
-            canvas.translate(590 - x - getResources().getInteger(R.integer.code_x),
-                    400 - y - getResources().getInteger(R.integer.code_y));
-        } else {
-            canvas.translate(600 - x - getResources().getInteger(R.integer.code_x),
-                    400 - y - getResources().getInteger(R.integer.code_y));
-        }
+        canvas.translate(600 - x - getResources().getInteger(R.integer.code_x),
+                400 - y - getResources().getInteger(R.integer.code_y));
         layout.draw(canvas);
         canvas.restore();//别忘了restore
 //        canvas.drawText(,
