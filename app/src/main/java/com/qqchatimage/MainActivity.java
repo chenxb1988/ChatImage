@@ -164,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
         paint.setTextSize(20);
         paint.setColor(getResources().getColor(R.color.textColorName));
         if (cbAiwu.isChecked()) {
-            canvas.drawText("风云", 1050 - x, 290 - y, paint);
+            canvas.drawText("仙人自来", 1030 - x, 290 - y, paint);
         } else {
-            canvas.drawText("生如夏花", 1000 - x, 290 - y, paint);
+            canvas.drawText("风云", 1040 - x, 290 - y, paint);
         }
 
         TextPaint textPaint = new TextPaint();
@@ -189,8 +189,13 @@ public class MainActivity extends AppCompatActivity {
         StaticLayout layout = new StaticLayout(content, textPaint, 1000, Layout.Alignment.ALIGN_NORMAL, 1.4F, 1.0F, true);
         // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行
         canvas.save();
-        canvas.translate(600 - x - getResources().getInteger(R.integer.code_x),
-                400 - y - getResources().getInteger(R.integer.code_y));
+        if (cbAiwu.isChecked()) {
+            canvas.translate(620 - x - getResources().getInteger(R.integer.code_x),
+                    400 - y - getResources().getInteger(R.integer.code_y));
+        } else {
+            canvas.translate(600 - x - getResources().getInteger(R.integer.code_x),
+                    400 - y - getResources().getInteger(R.integer.code_y));
+        }
         layout.draw(canvas);
         canvas.restore();//别忘了restore
 //        canvas.drawText(,
