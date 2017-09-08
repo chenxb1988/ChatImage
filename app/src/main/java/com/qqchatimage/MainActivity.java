@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView image;
     private TextView text;
     private EditText web, edit;
-    private CheckBox checkBox, cbAiwu;
+    private CheckBox checkBox, cbSwitch;
     private int timeDelay = 60;
     private File folder;
     private String msgPath;
@@ -63,32 +63,22 @@ public class MainActivity extends AppCompatActivity {
         web = (EditText) findViewById(R.id.et_web);
         edit = (EditText) findViewById(R.id.et_code);
         checkBox = (CheckBox) findViewById(R.id.cb_preview);
-        cbAiwu = (CheckBox) findViewById(R.id.cb_aiwu);
+        cbSwitch = (CheckBox) findViewById(R.id.cb_aiwu);
 
-        createFolder();
         findViewById(R.id.btn_generate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (preview) {
                     generateImage(0);
                 } else {
-                    timeDelay = 60;
-                    new Thread(new Runnable() {
+                    startMakePic(400);
+                    new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            List<Integer> list = new ArrayList<>();
-                            for (int i = 0; i < backs.length; i++) {
-                                list.add(i);
-                            }
-
-
-                            for (int i = 0; i < 30; i++) {
-                                Integer index = list.get((int) (list.size() * Math.random()));
-                                generateImage(index);
-                                list.remove(index);
-                            }
+                            cbSwitch.setChecked(!cbSwitch.isChecked());
+                            startMakePic(60);
                         }
-                    }).start();
+                    }, 25000);
                 }
             }
         });
@@ -101,8 +91,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void startMakePic(int delay) {
+        timeDelay = delay;
+        createFolder();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<Integer> list = new ArrayList<>();
+                for (int i = 0; i < backs.length; i++) {
+                    list.add(i);
+                }
+
+
+                for (int i = 0; i < 30; i++) {
+                    Integer index = list.get((int) (list.size() * Math.random()));
+                    generateImage(index);
+                    list.remove(index);
+                }
+            }
+        }).start();
+    }
+
     private void createFolder() {
-        SimpleDateFormat format2 = new SimpleDateFormat("yyyyMMddHHmm");
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
         String minute = format2.format(date);
 
@@ -135,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap message = BitmapFactory.decodeFile(msgPath);
         if (message == null) {
-            if (cbAiwu.isChecked()) {
+            if (cbSwitch.isChecked()) {
                 message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg);
                 canvas.drawBitmap(message, 480 - x, 275 - y, paintb);
             } else {
@@ -163,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
         paint.setTextSize(20);
         paint.setColor(getResources().getColor(R.color.textColorName));
-        if (cbAiwu.isChecked()) {
+        if (cbSwitch.isChecked()) {
             canvas.drawText("仙人自来", 1030 - x, 290 - y, paint);
         } else {
             canvas.drawText("风云", 1040 - x, 290 - y, paint);
@@ -189,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         StaticLayout layout = new StaticLayout(content, textPaint, 1000, Layout.Alignment.ALIGN_NORMAL, 1.4F, 1.0F, true);
         // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行
         canvas.save();
-        if (cbAiwu.isChecked()) {
+        if (cbSwitch.isChecked()) {
             canvas.translate(620 - x - getResources().getInteger(R.integer.code_x),
                     400 - y - getResources().getInteger(R.integer.code_y));
         } else {
