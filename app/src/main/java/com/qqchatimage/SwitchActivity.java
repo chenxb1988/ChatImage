@@ -1,5 +1,7 @@
 package com.qqchatimage;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -32,7 +34,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class SwitchActivity extends AppCompatActivity {
+    private String TAG_SP = "tag_sp";
     private int[] backs = {R.drawable.back01, R.drawable.back02, R.drawable.back03,
             R.drawable.back04, R.drawable.back05, R.drawable.back06,
             R.drawable.back07, R.drawable.back08, R.drawable.back09,
@@ -47,23 +50,30 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.back55, R.drawable.back56, R.drawable.back57};
     private ImageView image;
     private TextView text;
-    private EditText web, edit;
+    private EditText tvContent, tvCode;
     private CheckBox checkBox, cbSwitch;
     private int timeDelay = 60;
     private File folder;
     private String msgPath;
     private boolean preview = false;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_switch);
         image = (ImageView) findViewById(R.id.image);
         text = (TextView) findViewById(R.id.text);
-        web = (EditText) findViewById(R.id.et_web);
-        edit = (EditText) findViewById(R.id.et_code);
+        tvContent = (EditText) findViewById(R.id.et_web);
+        tvCode = (EditText) findViewById(R.id.et_code);
         checkBox = (CheckBox) findViewById(R.id.cb_preview);
         cbSwitch = (CheckBox) findViewById(R.id.cb_aiwu);
+
+        sp = getSharedPreferences("SwitchShare", Context.MODE_PRIVATE);
+        editor = sp.edit();
+
+        tvContent.setText(sp.getString(TAG_SP, getString(R.string.content_185)));
 
         findViewById(R.id.btn_generate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,15 +197,17 @@ public class MainActivity extends AppCompatActivity {
         textPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 
 
-        String str = web.getText() + "  " + edit.getText();
+        String str = tvContent.getText() + "  " + tvCode.getText();
         SpannableString content = new SpannableString(str);
         try {
             int start = str.indexOf("http");
-            content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            content.setSpan(new UnderlineSpan(), start, web.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)), start, tvContent.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            content.setSpan(new UnderlineSpan(), start, tvContent.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } catch (Exception e) {
 
         }
+        editor.putString(TAG_SP, tvContent.getText().toString());
+        editor.commit();
 
         StaticLayout layout = new StaticLayout(content, textPaint, 1000, Layout.Alignment.ALIGN_NORMAL, 1.4F, 1.0F, true);
         // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行

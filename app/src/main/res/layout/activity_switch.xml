@@ -16,7 +16,7 @@
             android:id="@+id/et_web"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/content"/>
+            android:text="@string/content_185"/>
 
         <EditText
             android:id="@+id/et_code"
