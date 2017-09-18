@@ -19,6 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".SkyActivity">
+        </activity>
+        <activity android:name=".SwitchActivity">
+        </activity>
     </application>
 
 </manifest>
