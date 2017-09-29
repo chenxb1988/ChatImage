@@ -229,7 +229,7 @@ public class SkyActivity extends AppCompatActivity {
 
         Bitmap message = BitmapFactory.decodeFile(msgPath);
         if (message == null) {
-            message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg);
+            message = BitmapFactory.decodeResource(getResources(), R.drawable.message_bg2);
             canvas.drawBitmap(message, 440 - x, 275 - y, paintb);
         } else {
             Bitmap bitmap = Bitmap.createScaledBitmap(message,
