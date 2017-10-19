@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <FrameLayout
+        android:id="@+id/fl_quan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_quan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/quan1"/>
+
+        <TextView
+            android:id="@+id/tv_quan_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="77dp"
+            android:layout_marginTop="78dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/content_share"
+            android:lineSpacingMultiplier="1.05"
+            android:textColor="#262626"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_quan_sys_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:text="14:33"
+            android:textColor="#99ffffff"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/tv_quan_send_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="78dp"
+            android:text="10:33"
+            android:textColor="#99363636"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="108dp"
+            android:text="删除"
+            android:textColor="#aa104E8B"
+            android:textSize="10sp"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_zone"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_zone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/zone2"/>
+
+        <TextView
+            android:id="@+id/tv_zone_sys_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:text="14:33"
+            android:textColor="#99ffffff"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/tv_zone_send_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="97dp"
+            android:text="今天10:33"
+            android:textColor="#99363636"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_zone2_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="120dp"
+            android:text="1019"
+            android:textColor="#565656"
+            android:textSize="13sp"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_tag"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:hint="分享"
+            android:textColor="#565656"/>
+
+        <RadioGroup
+            android:id="@+id/rb_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_zone1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="空间1"/>
+
+            <RadioButton
+                android:id="@+id/rb_zone2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="空间2"/>
+
+            <RadioButton
+                android:id="@+id/rb_quan1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="朋友圈1"/>
+
+            <RadioButton
+                android:id="@+id/rb_quan2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="朋友圈2"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生成"/>
+
+    </LinearLayout>
+</FrameLayout>
