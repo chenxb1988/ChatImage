@@ -1,10 +1,10 @@
 package com.qqchatimage;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -27,7 +27,7 @@ import java.util.Date;
  * Created by chenxb on 2017/10/19.
  */
 
-public class ShareActivity extends AppCompatActivity {
+public class ShareActivity extends Activity {
     FrameLayout frameQuan, frameZone;
     ImageView ivQuan, ivZone;
     TextView tvQuanTag, tvQuanSysTime, tvQuanSendTime, tvZoneSysTime, tvZoneSendTime, tvZone2Tag;
@@ -137,6 +137,7 @@ public class ShareActivity extends AppCompatActivity {
 
     private void getImage(View view) {
         view.setDrawingCacheEnabled(true);
+        view.destroyDrawingCache();
         view.buildDrawingCache();
         Bitmap bitmap = view.getDrawingCache();
         try {
