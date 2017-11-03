@@ -6,17 +6,12 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.IdRes;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,17 +26,12 @@ import java.util.Date;
  */
 
 public class ShareActivity extends Activity {
-    FrameLayout frameQuan, frameZone, framePraise, frameConvert;
-    LinearLayout linearQuan, linearZone;
+    FrameLayout framePraise, frameConvert;
     ImageView ivQuan, ivZone;
-    TextView tvQuanTag, tvQuanSysTime, tvQuanSendTime;
-    TextView tvZoneSysTime, tvZoneSendTime, tvZone2Tag;
-    TextView tvPraiseSysTime, tvPraiseSendTime;
-    TextView tvConvertList, tvConvertSysTime;
-    ImageView ivConvert, ivPraise1, ivPraise2, ivPraise3;
+    TextView tvPraiseSysTime, tvPraiseSendTime, tvPraiseTag;
+    TextView tvConvertList, tvConvertSysTime, tvZoneTag;
+    ImageView ivPraise1, ivPraise2, ivPraise3;
     EditText etTag, etClock;
-    RadioButton rbZone1, rbZone2, rbQuan1, rbQuan2;
-    RadioGroup rbGroup;
     String rbStr;
     String roleTag;
 
@@ -64,41 +54,22 @@ public class ShareActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
 
-        linearQuan = (LinearLayout) findViewById(R.id.ll_quan);
-        linearZone = (LinearLayout) findViewById(R.id.ll_zone);
-        frameQuan = (FrameLayout) findViewById(R.id.fl_quan);
         framePraise = (FrameLayout) findViewById(R.id.fl_praise);
-        frameZone = (FrameLayout) findViewById(R.id.fl_zone);
         frameConvert = (FrameLayout) findViewById(R.id.fl_convert);
 
-        ivQuan = (ImageView) findViewById(R.id.iv_quan);
-        ivZone = (ImageView) findViewById(R.id.iv_zone);
-        tvQuanTag = (TextView) findViewById(R.id.tv_quan_tag);
-        tvQuanSysTime = (TextView) findViewById(R.id.tv_quan_sys_time);
-        tvQuanSendTime = (TextView) findViewById(R.id.tv_quan_send_time);
-
-        tvZoneSysTime = (TextView) findViewById(R.id.tv_zone_sys_time);
-        tvZoneSendTime = (TextView) findViewById(R.id.tv_zone_send_time);
-        tvZone2Tag = (TextView) findViewById(R.id.tv_zone2_tag);
-
+        tvPraiseTag = (TextView) findViewById(R.id.tv_quan_tag);
         tvPraiseSysTime = (TextView) findViewById(R.id.tv_praise_sys_time);
         tvPraiseSendTime = (TextView) findViewById(R.id.tv_praise_send_time);
-        ivConvert = (ImageView) findViewById(R.id.iv_convert);
         ivPraise1 = (ImageView) findViewById(R.id.iv_praise1);
         ivPraise2 = (ImageView) findViewById(R.id.iv_praise2);
         ivPraise3 = (ImageView) findViewById(R.id.iv_praise3);
 
         tvConvertList = (TextView) findViewById(R.id.tv_convert_list);
         tvConvertSysTime = (TextView) findViewById(R.id.tv_convert_sys_time);
+        tvZoneTag = (TextView) findViewById(R.id.tv_zone_tag);
 
         etTag = (EditText) findViewById(R.id.et_tag);
         etClock = (EditText) findViewById(R.id.et_clock);
-        rbGroup = (RadioGroup) findViewById(R.id.rb_group);
-        rbZone1 = (RadioButton) findViewById(R.id.rb_zone1);
-        rbZone2 = (RadioButton) findViewById(R.id.rb_zone2);
-        rbQuan1 = (RadioButton) findViewById(R.id.rb_quan1);
-        rbQuan2 = (RadioButton) findViewById(R.id.rb_quan2);
-
 
         folder = new File(Environment.getExternalStorageDirectory().toString() + "/naruto/"
                 + dateFormat.format(new Date(System.currentTimeMillis())) + "/");
@@ -106,80 +77,66 @@ public class ShareActivity extends Activity {
             folder.mkdirs();
         }
 
-        rbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_zone1:
-                        rbStr = " 空间1";
-                        roleTag = "1";
-                        setCommonZone();
-                        tvZone2Tag.setVisibility(View.GONE);
-                        ivZone.setImageResource(R.drawable.zone1);
-                        tvZoneSendTime.setText("今天" + etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
-                        break;
-                    case R.id.rb_zone2:
-                        rbStr = " 空间2";
-                        roleTag = "2";
-                        setCommonZone();
-                        tvZone2Tag.setVisibility(View.VISIBLE);
-                        ivZone.setImageResource(R.drawable.zone2);
-                        tvZoneSendTime.setText("今天" + etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
-                        tvZone2Tag.setText(dateFormat.format(new Date(System.currentTimeMillis())));
-                        break;
-                    case R.id.rb_quan1:
-                        rbStr = " 朋友圈1";
-                        roleTag = "1";
-                        setCommonQuan();
-                        ivQuan.setImageResource(R.drawable.quan1);
-                        String sendtime = etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
-                        tvQuanSendTime.setText(sendtime);
-                        tvPraiseSendTime.setText(sendtime);
-                        break;
-                    case R.id.rb_quan2:
-                        rbStr = " 朋友圈2";
-                        roleTag = "2";
-                        setCommonQuan();
-                        ivQuan.setImageResource(R.drawable.quan2);
-                        String sendtime2 = etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
-                        tvQuanSendTime.setText(sendtime2);
-                        tvPraiseSendTime.setText(sendtime2);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+        setCommonZone();
+        setCommonQuan();
 
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rbZone1.isChecked() || rbZone2.isChecked()) {
-                    getImage(frameZone);
+                {
+                    if ("".equals(etTag.getText().toString())) {
+                        Toast.makeText(ShareActivity.this, "输入分享标签", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    getImage(frameConvert, false);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            getImage(frameConvert);
-                        }
-                    }, 3000);
-                } else if (rbQuan1.isChecked() || rbQuan2.isChecked()) {
-                    getImage(frameQuan);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            getImage(framePraise);
+                            getImage(framePraise, true);
                         }
                     }, 3000);
                 }
+            }
+        });
+
+        etTag.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tvZoneTag.setText(s);
+                tvPraiseTag.setText(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etClock.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tvPraiseSendTime.setText(s + ":" + (30 + (int) (Math.random() * 10)));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
 
     private void setCommonZone() {
-        linearQuan.setVisibility(View.GONE);
-        linearZone.setVisibility(View.VISIBLE);
         String systime = timeFormat.format(new Date(System.currentTimeMillis()));
-        tvZoneSysTime.setText(systime);
         tvConvertSysTime.setText(systime);
 
         int count = (int) (10 + 3 * Math.random());
@@ -198,19 +155,9 @@ public class ShareActivity extends Activity {
     }
 
     private void setCommonQuan() {
-        linearQuan.setVisibility(View.VISIBLE);
-        linearZone.setVisibility(View.GONE);
-        String str = etTag.getText() + "\n" + getString(R.string.content_share);
-        SpannableString content = new SpannableString(str);
-        int start = str.indexOf("49521");
-        content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)),
-                start, start + 9, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        content.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlue)),
-                str.indexOf("http"), str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvQuanTag.setText(content);
         String systime = timeFormat.format(new Date(System.currentTimeMillis()));
-        tvQuanSysTime.setText(systime);
         tvPraiseSysTime.setText(systime);
+        tvPraiseSendTime.setText(etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
 
         int i1 = (int) (Math.random() * 4), i2 = i1 + 1 + (int) (Math.random() * 4), i3 = i2 + 1 + (int) (Math.random() * 3);
         ivPraise1.setImageResource(praiseIds[i1]);
@@ -218,11 +165,13 @@ public class ShareActivity extends Activity {
         ivPraise3.setImageResource(praiseIds[i3]);
     }
 
-    private void getImage(View view) {
+    private void getImage(View view, boolean over) {
         Bitmap bitmap = loadBitmapFromView(view);
         try {
             saveBitmap(bitmap, System.currentTimeMillis() + ".jpg");
-            Toast.makeText(this, "保存成功" + rbStr, Toast.LENGTH_SHORT).show();
+            if (over) {
+                Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -240,11 +189,7 @@ public class ShareActivity extends Activity {
     }
 
     public void saveBitmap(Bitmap bm, String name) throws IOException {
-        File dir = new File(folder, roleTag);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File f = new File(dir, name);
+        File f = new File(folder, name);
         if (f.exists()) {
             f.delete();
         }

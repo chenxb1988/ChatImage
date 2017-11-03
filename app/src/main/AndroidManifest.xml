@@ -12,19 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ShareActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".SkyActivity">
-        </activity>
-        <activity android:name=".SwitchActivity">
-        </activity>
-        <activity android:name=".ShareActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
     </application>
 
