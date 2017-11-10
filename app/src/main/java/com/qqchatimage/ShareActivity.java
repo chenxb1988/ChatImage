@@ -87,10 +87,6 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View v) {
                 {
-                    if ("".equals(etTag.getText().toString())) {
-                        Toast.makeText(ShareActivity.this, "输入分享标签", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     getImage(frameConvert, false);
                     new Handler().postDelayed(new Runnable() {
                         @Override
