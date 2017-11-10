@@ -30,13 +30,11 @@ public class ShareActivity extends Activity {
     ImageView ivQuan, ivZone;
     TextView tvPraiseSysTime, tvPraiseSendTime, tvPraiseTag;
     TextView tvConvertList, tvConvertSysTime, tvZoneTag;
-    ImageView ivPraise1, ivPraise2, ivPraise3;
+    ImageView ivPraise1, ivPraise2, ivPraise3, ivShade1, ivShade2, ivShade3, ivShade4;
     EditText etTag, etClock;
-    String rbStr;
-    String roleTag;
 
     File folder;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MMdd");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     int[] praiseIds = {R.drawable.praise0, R.drawable.praise1, R.drawable.praise2, R.drawable.praise3,
@@ -63,6 +61,10 @@ public class ShareActivity extends Activity {
         ivPraise1 = (ImageView) findViewById(R.id.iv_praise1);
         ivPraise2 = (ImageView) findViewById(R.id.iv_praise2);
         ivPraise3 = (ImageView) findViewById(R.id.iv_praise3);
+        ivShade1 = (ImageView) findViewById(R.id.iv_shade1);
+        ivShade2 = (ImageView) findViewById(R.id.iv_shade2);
+        ivShade3 = (ImageView) findViewById(R.id.iv_shade3);
+        ivShade4 = (ImageView) findViewById(R.id.iv_shade4);
 
         tvConvertList = (TextView) findViewById(R.id.tv_convert_list);
         tvConvertSysTime = (TextView) findViewById(R.id.tv_convert_sys_time);
@@ -95,6 +97,16 @@ public class ShareActivity extends Activity {
                             getImage(framePraise, true);
                         }
                     }, 3000);
+                }
+            }
+        });
+
+        findViewById(R.id.reset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                {
+                    setCommonZone();
+                    setCommonQuan();
                 }
             }
         });
@@ -157,12 +169,35 @@ public class ShareActivity extends Activity {
     private void setCommonQuan() {
         String systime = timeFormat.format(new Date(System.currentTimeMillis()));
         tvPraiseSysTime.setText(systime);
+        tvPraiseTag.setText(dateFormat.format(new Date(System.currentTimeMillis())));
         tvPraiseSendTime.setText(etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
 
         int i1 = (int) (Math.random() * 4), i2 = i1 + 1 + (int) (Math.random() * 4), i3 = i2 + 1 + (int) (Math.random() * 3);
         ivPraise1.setImageResource(praiseIds[i1]);
         ivPraise2.setImageResource(praiseIds[i2]);
         ivPraise3.setImageResource(praiseIds[i3]);
+
+        double r = Math.random();
+        if (r > 0.2f) {
+            ivShade1.setVisibility(View.GONE);
+        } else {
+            ivShade1.setVisibility(View.VISIBLE);
+        }
+        if (r > 0.4f) {
+            ivShade2.setVisibility(View.GONE);
+        } else {
+            ivShade2.setVisibility(View.VISIBLE);
+        }
+        if (r > 0.6f) {
+            ivShade3.setVisibility(View.GONE);
+        } else {
+            ivShade3.setVisibility(View.VISIBLE);
+        }
+        if (r > 0.8f) {
+            ivShade4.setVisibility(View.GONE);
+        } else {
+            ivShade4.setVisibility(View.VISIBLE);
+        }
     }
 
     private void getImage(View view, boolean over) {

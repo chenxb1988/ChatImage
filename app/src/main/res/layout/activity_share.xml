@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,12 +11,13 @@
 
         <FrameLayout
             android:id="@+id/fl_praise"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/wenrouquan"/>
 
             <ImageView
@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="116dp"
+                android:layout_marginBottom="208dp"
                 android:layout_marginLeft="22dp"
                 android:scaleX="0.9"
                 android:scaleY="0.9"
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="78dp"
+                android:layout_marginBottom="169dp"
                 android:layout_marginLeft="22dp"
                 android:scaleX="0.9"
                 android:scaleY="0.9"
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="130dp"
                 android:layout_marginLeft="22dp"
                 android:scaleX="0.9"
                 android:scaleY="0.9"
@@ -67,24 +67,66 @@
                 android:id="@+id/tv_praise_send_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="201dp"
-                android:layout_marginLeft="60dp"
+                android:layout_marginLeft="62dp"
+                android:layout_marginTop="327dp"
                 android:text="10:33"
                 android:textColor="#99363636"
-                android:textSize="12sp"/>
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/tv_quan_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="65dp"
+                android:layout_marginLeft="61dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginTop="65dp"
-                android:lineSpacingMultiplier="1.04"
-                android:text="10.21"
-                android:textColor="#262626"
-                android:textSize="15sp"/>
+                android:layout_marginTop="298dp"
+                android:text="2017.1.1"
+                android:textColor="#dc262626"
+                android:textSize="14.5sp"/>
+
+            <ImageView
+                android:id="@+id/iv_shade1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="143dp"
+                android:layout_marginRight="133dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:src="@drawable/pic_shade"/>
+
+            <ImageView
+                android:id="@+id/iv_shade2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="143dp"
+                android:layout_marginRight="95dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:src="@drawable/pic_shade"/>
+
+            <ImageView
+                android:id="@+id/iv_shade3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="143dp"
+                android:layout_marginRight="57dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:src="@drawable/pic_shade"/>
+
+            <ImageView
+                android:id="@+id/iv_shade4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="143dp"
+                android:layout_marginRight="20dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:src="@drawable/pic_shade"/>
         </FrameLayout>
 
         <FrameLayout
@@ -107,6 +149,7 @@
                 android:text="     a"
                 android:textColor="#3d6fa2"
                 android:textSize="13sp"/>
+
             <TextView
                 android:id="@+id/tv_zone_tag"
                 android:layout_width="wrap_content"
@@ -142,6 +185,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
+                <Button
+                    android:id="@+id/reset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="改变数据"/>
+
                 <EditText
                     android:id="@+id/et_clock"
                     android:layout_width="wrap_content"
@@ -159,12 +208,12 @@
                     android:textColor="#565656"/>
             </LinearLayout>
 
+
             <Button
                 android:id="@+id/start"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="生成"/>
-
+                android:text="生成图片"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
