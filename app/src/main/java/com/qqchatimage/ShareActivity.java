@@ -29,7 +29,7 @@ public class ShareActivity extends Activity {
     FrameLayout framePraise, frameConvert;
     ImageView ivQuan, ivZone;
     TextView tvPraiseSysTime, tvPraiseSendTime, tvPraiseTag;
-    TextView tvConvertList, tvConvertSysTime, tvZoneTag;
+    TextView tvConvertList, tvConvertSysTime, tvConvertSendTime,tvZoneTag;
     ImageView ivPraise1, ivPraise2, ivPraise3, ivShade1, ivShade2, ivShade3, ivShade4;
     EditText etTag, etClock;
 
@@ -68,6 +68,7 @@ public class ShareActivity extends Activity {
 
         tvConvertList = (TextView) findViewById(R.id.tv_convert_list);
         tvConvertSysTime = (TextView) findViewById(R.id.tv_convert_sys_time);
+        tvConvertSendTime = (TextView) findViewById(R.id.tv_convert_send_time);
         tvZoneTag = (TextView) findViewById(R.id.tv_zone_tag);
 
         etTag = (EditText) findViewById(R.id.et_tag);
@@ -150,6 +151,8 @@ public class ShareActivity extends Activity {
     private void setCommonZone() {
         String systime = timeFormat.format(new Date(System.currentTimeMillis()));
         tvConvertSysTime.setText(systime);
+        tvZoneTag.setText(dateFormat.format(new Date(System.currentTimeMillis())));
+        tvConvertSendTime.setText("今天"+etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
 
         int count = (int) (10 + 3 * Math.random());
         StringBuffer sb = new StringBuffer();
