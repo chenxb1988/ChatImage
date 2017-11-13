@@ -13,7 +13,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="分 享"/>
+        android:text="185分享"/>
 
     <Button
         android:id="@+id/btn_185"
@@ -22,7 +22,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="1 8 5 平 台"/>
+        android:text="1 8 5 平 台"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_sky"
