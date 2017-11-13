@@ -26,13 +26,13 @@ import java.util.Date;
  */
 
 public class ShareActivity extends Activity {
-    FrameLayout framePraise, frameConvert;
-    ImageView ivQuan, ivZone;
-    TextView tvPraiseSysTime, tvPraiseSendTime, tvPraiseTag;
-    TextView tvConvertList, tvConvertSysTime, tvConvertSendTime,tvZoneTag;
+    FrameLayout frameQuan, frameZone;
+    TextView tvQuanSysTime, tvQuanSendTime, tvQuanTag;
+    TextView tvZoneList, tvZoneSysTime, tvZoneSendTime, tvZoneTag;
     ImageView ivPraise1, ivPraise2, ivPraise3, ivShade1, ivShade2, ivShade3, ivShade4;
     EditText etTag, etClock;
 
+    String sysTime, sendTime, tag;
     File folder;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -52,12 +52,12 @@ public class ShareActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
 
-        framePraise = (FrameLayout) findViewById(R.id.fl_praise);
-        frameConvert = (FrameLayout) findViewById(R.id.fl_convert);
+        frameQuan = (FrameLayout) findViewById(R.id.fl_praise);
+        frameZone = (FrameLayout) findViewById(R.id.fl_convert);
 
-        tvPraiseTag = (TextView) findViewById(R.id.tv_quan_tag);
-        tvPraiseSysTime = (TextView) findViewById(R.id.tv_praise_sys_time);
-        tvPraiseSendTime = (TextView) findViewById(R.id.tv_praise_send_time);
+        tvQuanTag = (TextView) findViewById(R.id.tv_quan_tag);
+        tvQuanSysTime = (TextView) findViewById(R.id.tv_praise_sys_time);
+        tvQuanSendTime = (TextView) findViewById(R.id.tv_praise_send_time);
         ivPraise1 = (ImageView) findViewById(R.id.iv_praise1);
         ivPraise2 = (ImageView) findViewById(R.id.iv_praise2);
         ivPraise3 = (ImageView) findViewById(R.id.iv_praise3);
@@ -66,9 +66,9 @@ public class ShareActivity extends Activity {
         ivShade3 = (ImageView) findViewById(R.id.iv_shade3);
         ivShade4 = (ImageView) findViewById(R.id.iv_shade4);
 
-        tvConvertList = (TextView) findViewById(R.id.tv_convert_list);
-        tvConvertSysTime = (TextView) findViewById(R.id.tv_convert_sys_time);
-        tvConvertSendTime = (TextView) findViewById(R.id.tv_convert_send_time);
+        tvZoneList = (TextView) findViewById(R.id.tv_convert_list);
+        tvZoneSysTime = (TextView) findViewById(R.id.tv_convert_sys_time);
+        tvZoneSendTime = (TextView) findViewById(R.id.tv_convert_send_time);
         tvZoneTag = (TextView) findViewById(R.id.tv_zone_tag);
 
         etTag = (EditText) findViewById(R.id.et_tag);
@@ -80,18 +80,17 @@ public class ShareActivity extends Activity {
             folder.mkdirs();
         }
 
-        setCommonZone();
-        setCommonQuan();
+        setContent();
 
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 {
-                    getImage(frameConvert, false);
+                    getImage(frameZone, false);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            getImage(framePraise, true);
+                            getImage(frameQuan, true);
                         }
                     }, 3000);
                 }
@@ -102,8 +101,7 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View v) {
                 {
-                    setCommonZone();
-                    setCommonQuan();
+                    setContent();
                 }
             }
         });
@@ -117,7 +115,7 @@ public class ShareActivity extends Activity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 tvZoneTag.setText(s);
-                tvPraiseTag.setText(s);
+                tvQuanTag.setText(s);
             }
 
             @Override
@@ -134,7 +132,8 @@ public class ShareActivity extends Activity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvPraiseSendTime.setText(s + ":" + (30 + (int) (Math.random() * 10)));
+                tvQuanSendTime.setText(s + ":" + (30 + (int) (Math.random() * 10)));
+                tvZoneSendTime.setText("今天" + etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
             }
 
             @Override
@@ -144,11 +143,21 @@ public class ShareActivity extends Activity {
         });
     }
 
+    private void setContent() {
+        sysTime = timeFormat.format(new Date(System.currentTimeMillis()));
+        sendTime = etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
+        tag = etTag.getText().toString().trim();
+        if ("".equals(tag)) {
+            tag = dateFormat.format(new Date(System.currentTimeMillis()));
+        }
+        setCommonZone();
+        setCommonQuan();
+    }
+
     private void setCommonZone() {
-        String systime = timeFormat.format(new Date(System.currentTimeMillis()));
-        tvConvertSysTime.setText(systime);
-        tvZoneTag.setText(dateFormat.format(new Date(System.currentTimeMillis())));
-        tvConvertSendTime.setText("今天"+etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
+        tvZoneSysTime.setText(sysTime);
+        tvZoneTag.setText(tag);
+        tvZoneSendTime.setText("今天" + sendTime);
 
         int count = (int) (10 + 3 * Math.random());
         StringBuffer sb = new StringBuffer();
@@ -162,14 +171,13 @@ public class ShareActivity extends Activity {
             sb.append(converts[index]);
             index += (int) (Math.random() * 4) + 1;
         }
-        tvConvertList.setText(sb.toString());
+        tvZoneList.setText(sb.toString());
     }
 
     private void setCommonQuan() {
-        String systime = timeFormat.format(new Date(System.currentTimeMillis()));
-        tvPraiseSysTime.setText(systime);
-        tvPraiseTag.setText(dateFormat.format(new Date(System.currentTimeMillis())));
-        tvPraiseSendTime.setText(etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
+        tvQuanSysTime.setText(sysTime);
+        tvQuanTag.setText(tag);
+        tvQuanSendTime.setText(sendTime);
 
         int i1 = (int) (Math.random() * 4), i2 = i1 + 1 + (int) (Math.random() * 4), i3 = i2 + 1 + (int) (Math.random() * 3);
         ivPraise1.setImageResource(praiseIds[i1]);
