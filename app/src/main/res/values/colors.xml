@@ -12,4 +12,7 @@
 
     <color name="textColorSkyTime">#b6b6b6</color>
     <color name="textColorSkyDate">#3f4344</color>
+
+    <color name="textColorBlueFuli">#3333ff</color>
+    <color name="textColorBlueFuli2">#3366ff</color>
 </resources>
