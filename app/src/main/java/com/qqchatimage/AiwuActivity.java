@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -25,17 +28,19 @@ import java.util.Date;
  * Created by chenxb on 2017/10/19.
  */
 
-public class SkyActivity extends Activity {
+public class AiwuActivity extends Activity {
     FrameLayout frameQuan, frameZone;
     TextView tvQuanSysTime, tvQuanSendTime, tvQuanTag;
     TextView tvZoneList, tvZoneSysTime, tvZoneSendTime, tvZoneTag;
     ImageView ivPraise1, ivPraise2, ivPraise3, ivShade1, ivShade2, ivShade3, ivShade4;
     EditText etTag, etClock;
 
-    String sysTime, sendTime, tag;
+    String sysTime, sendTime;
+    SpannableString tag, tag2;
     File folder;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat tagFormat = new SimpleDateFormat("MM月dd日");
 
     int[] praiseIds = {R.drawable.praise0, R.drawable.praise1, R.drawable.praise2, R.drawable.praise3,
             R.drawable.praise4, R.drawable.praise5, R.drawable.praise6, R.drawable.praise7,
@@ -50,7 +55,7 @@ public class SkyActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sky);
+        setContentView(R.layout.activity_aiwu);
 
         frameQuan = (FrameLayout) findViewById(R.id.fl_praise);
         frameZone = (FrameLayout) findViewById(R.id.fl_convert);
@@ -74,7 +79,7 @@ public class SkyActivity extends Activity {
         etTag = (EditText) findViewById(R.id.et_tag);
         etClock = (EditText) findViewById(R.id.et_clock);
 
-        folder = new File(Environment.getExternalStorageDirectory().toString() + "/naruto/"
+        folder = new File(Environment.getExternalStorageDirectory().toString() + "/naruto/爱吾"
                 + dateFormat.format(new Date(System.currentTimeMillis())) + "/");
         if (!folder.exists()) {
             folder.mkdirs();
@@ -114,8 +119,8 @@ public class SkyActivity extends Activity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvZoneTag.setText(s);
-                tvQuanTag.setText(s);
+                tvZoneTag.setText(tag2 + "  " + s);
+                tvQuanTag.setText(tag + "  " + s);
             }
 
             @Override
@@ -155,9 +160,16 @@ public class SkyActivity extends Activity {
     private void setContent() {
         sysTime = timeFormat.format(new Date(System.currentTimeMillis()));
         sendTime = getSendTimeStr();
-        tag = etTag.getText().toString().trim();
-        if ("".equals(tag)) {
-            tag = dateFormat.format(new Date(System.currentTimeMillis()));
+        String str = tagFormat.format(new Date(System.currentTimeMillis())) + getString(R.string.content_aiwu);
+        tag = new SpannableString(str);
+        tag2 = new SpannableString(str);
+        try {
+            int start = str.indexOf("25az.com");
+            int end = start + 8;
+            tag.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tag2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli2)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } catch (Exception e) {
+
         }
         setCommonZone();
         setCommonQuan();
@@ -165,12 +177,12 @@ public class SkyActivity extends Activity {
 
     private void setCommonZone() {
         tvZoneSysTime.setText(sysTime);
-        tvZoneTag.setText(tag);
+        tvZoneTag.setText(tag2);
         tvZoneSendTime.setText("今天" + sendTime);
 
         int count = (int) (10 + 3 * Math.random());
         StringBuffer sb = new StringBuffer();
-        int index = (int) (Math.random() * 4);
+        int index = converts.length - 1;
         for (int i = 0; i < count; i++) {
             if (i == 0) {
                 sb.append("     ");
@@ -178,7 +190,7 @@ public class SkyActivity extends Activity {
                 sb.append("、");
             }
             sb.append(converts[index]);
-            index += (int) (Math.random() * 4) + 1;
+            index -= ((int) (Math.random() * 4) + 1);
         }
         tvZoneList.setText(sb.toString());
     }

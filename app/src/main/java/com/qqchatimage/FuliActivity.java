@@ -136,8 +136,9 @@ public class FuliActivity extends Activity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvQuanSendTime.setText(s + ":" + (30 + (int) (Math.random() * 10)));
-                tvZoneSendTime.setText("今天" + etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
+                sendTime = getSendTimeStr();
+                tvQuanSendTime.setText(sendTime);
+                tvZoneSendTime.setText("今天" + sendTime);
             }
 
             @Override
@@ -147,9 +148,17 @@ public class FuliActivity extends Activity {
         });
     }
 
+    private String getSendTimeStr() {
+        if (etClock.getText().toString().contains(":")) {
+            return etClock.getText().toString();
+        } else {
+            return etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
+        }
+    }
+
     private void setContent() {
         sysTime = timeFormat.format(new Date(System.currentTimeMillis()));
-        sendTime = etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
+        sendTime = getSendTimeStr();
         String str = getString(R.string.content_fuli);
         tag = new SpannableString(str);
         tag2 = new SpannableString(str);

@@ -116,7 +116,7 @@ public class ShareActivity extends Activity {
                         setCommonZone();
                         tvZone2Tag.setVisibility(View.GONE);
                         ivZone.setImageResource(R.drawable.zone1);
-                        tvZoneSendTime.setText("今天" + etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
+                        tvZoneSendTime.setText("今天" + getSendTimeStr());
                         break;
                     case R.id.rb_zone2:
                         rbStr = " 空间2";
@@ -124,7 +124,7 @@ public class ShareActivity extends Activity {
                         setCommonZone();
                         tvZone2Tag.setVisibility(View.VISIBLE);
                         ivZone.setImageResource(R.drawable.zone2);
-                        tvZoneSendTime.setText("今天" + etClock.getText() + ":" + (30 + (int) (Math.random() * 10)));
+                        tvZoneSendTime.setText("今天" + getSendTimeStr());
                         tvZone2Tag.setText(dateFormat.format(new Date(System.currentTimeMillis())));
                         break;
                     case R.id.rb_quan1:
@@ -132,7 +132,7 @@ public class ShareActivity extends Activity {
                         roleTag = "1";
                         setCommonQuan();
                         ivQuan.setImageResource(R.drawable.quan1);
-                        String sendtime = etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
+                        String sendtime = getSendTimeStr();
                         tvQuanSendTime.setText(sendtime);
                         tvPraiseSendTime.setText(sendtime);
                         break;
@@ -141,7 +141,7 @@ public class ShareActivity extends Activity {
                         roleTag = "2";
                         setCommonQuan();
                         ivQuan.setImageResource(R.drawable.quan2);
-                        String sendtime2 = etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
+                        String sendtime2 = getSendTimeStr();
                         tvQuanSendTime.setText(sendtime2);
                         tvPraiseSendTime.setText(sendtime2);
                         break;
@@ -173,6 +173,14 @@ public class ShareActivity extends Activity {
                 }
             }
         });
+    }
+
+    private String getSendTimeStr() {
+        if (etClock.getText().toString().contains(":")) {
+            return etClock.getText().toString();
+        } else {
+            return etClock.getText() + ":" + (30 + (int) (Math.random() * 10));
+        }
     }
 
     private void setCommonZone() {
