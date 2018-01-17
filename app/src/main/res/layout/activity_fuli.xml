@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="61dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="105dp"
+                android:layout_marginTop="100dp"
                 android:text="@string/content_fuli"
                 android:textColor="#ff262626"
                 android:lineSpacingMultiplier="1.05"
@@ -159,8 +159,8 @@
                 android:layout_marginTop="153dp"
                 android:text="@string/content_fuli"
                 android:textColor="#ff262626"
-                android:lineSpacingMultiplier="1.06"
-                android:textSize="13.5sp"/>
+                android:lineSpacingMultiplier="1.0"
+                android:textSize="13.2sp"/>
 
             <TextView
                 android:id="@+id/tv_convert_send_time"

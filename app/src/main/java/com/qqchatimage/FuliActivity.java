@@ -165,8 +165,12 @@ public class FuliActivity extends Activity {
         try {
             int start = str.indexOf("http");
             int end = str.indexOf("apk") + 3;
+            int start2 = str.indexOf("http", end);
+            int end2 = str.length();
             tag.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             tag2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli2)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tag.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli)), start2, end2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tag2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli2)), start2, end2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } catch (Exception e) {
 
         }
