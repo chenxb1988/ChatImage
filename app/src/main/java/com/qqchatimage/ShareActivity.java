@@ -114,18 +114,13 @@ public class ShareActivity extends Activity {
                         rbStr = " 空间1";
                         roleTag = "1";
                         setCommonZone();
-                        tvZone2Tag.setVisibility(View.GONE);
                         ivZone.setImageResource(R.drawable.zone1);
-                        tvZoneSendTime.setText("今天" + getSendTimeStr());
                         break;
                     case R.id.rb_zone2:
                         rbStr = " 空间2";
                         roleTag = "2";
                         setCommonZone();
-                        tvZone2Tag.setVisibility(View.VISIBLE);
                         ivZone.setImageResource(R.drawable.zone2);
-                        tvZoneSendTime.setText("今天" + getSendTimeStr());
-                        tvZone2Tag.setText(dateFormat.format(new Date(System.currentTimeMillis())));
                         break;
                     case R.id.rb_quan1:
                         rbStr = " 朋友圈1";
@@ -161,7 +156,7 @@ public class ShareActivity extends Activity {
                         public void run() {
                             getImage(frameConvert);
                         }
-                    }, 3000);
+                    }, 2000);
                 } else if (rbQuan1.isChecked() || rbQuan2.isChecked()) {
                     getImage(frameQuan);
                     new Handler().postDelayed(new Runnable() {
@@ -169,7 +164,7 @@ public class ShareActivity extends Activity {
                         public void run() {
                             getImage(framePraise);
                         }
-                    }, 3000);
+                    }, 2000);
                 }
             }
         });
@@ -189,6 +184,8 @@ public class ShareActivity extends Activity {
         String systime = timeFormat.format(new Date(System.currentTimeMillis()));
         tvZoneSysTime.setText(systime);
         tvConvertSysTime.setText(systime);
+        tvZoneSendTime.setText("今天" + getSendTimeStr());
+        tvZone2Tag.setText(etTag.getText());
 
         int count = (int) (10 + 3 * Math.random());
         StringBuffer sb = new StringBuffer();

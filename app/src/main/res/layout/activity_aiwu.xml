@@ -17,7 +17,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/wenrouquan"/>
+                android:src="@drawable/aiwu_quan"/>
 
             <ImageView
                 android:id="@+id/iv_praise1"
@@ -138,7 +138,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/wenrouzone"/>
+                android:src="@drawable/aiwu_zone"/>
 
             <TextView
                 android:id="@+id/tv_convert_list"
