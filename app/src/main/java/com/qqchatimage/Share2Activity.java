@@ -6,12 +6,18 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,17 +31,24 @@ import java.util.Date;
  * Created by chenxb on 2017/10/19.
  */
 
-public class SkyActivity extends Activity {
+public class Share2Activity extends Activity {
     FrameLayout frameQuan, frameZone;
     TextView tvQuanSysTime, tvQuanSendTime, tvQuanTag;
     TextView tvZoneList, tvZoneSysTime, tvZoneSendTime, tvZoneTag;
     ImageView ivPraise1, ivPraise2, ivPraise3, ivShade1, ivShade2, ivShade3, ivShade4;
     EditText etTag, etClock;
 
-    String sysTime, sendTime, tag;
+    String sysTime, sendTime;
+    SpannableString tag, tag2;
     File folder;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat tagFormat = new SimpleDateFormat("MM月dd日");
+
+    String folder_tag = "1";
+    ImageView ivQuan, ivZone;
+    RadioButton rbZone1, rbZone2;
+    RadioGroup rbGroup;
 
     int[] praiseIds = {R.drawable.praise0, R.drawable.praise1, R.drawable.praise2, R.drawable.praise3,
             R.drawable.praise4, R.drawable.praise5, R.drawable.praise6, R.drawable.praise7,
@@ -44,13 +57,13 @@ public class SkyActivity extends Activity {
     String[] converts = {"シ俊", "虚.夜月", "不屈", "小豆豆", "Kevin晏", "皮卡丘",
             "Y_Lam", "明", "向左’永垂不朽的偏爱", "胡炳昆", "回亿是曾经", "控制つ爱你", "她说", "一念永恒", "朝槿夕凉", "梧桐相待", "A0-隔壁老王",
             "LKF", "爱拼才会赢", "紫樱菲飞", "云~涧~水", "☆star&", "心&梦君", "小小舒", "丹里个丹", "蓝天", "LzHس钻戒", "心の始迹",
-            "不要叫醒", "简单&爱", "涅槃", "隐逸游者", "·风雨淋·", "～脚印～", "∮  瀛~", "ャ爵洳σ", "安安", "亾.生缒.莍", "断线の风筝",
+            "不要叫醒", "简单&爱", "涅槃", "暮光之城", "·风雨淋·", "～脚印～", "∮  瀛~", "ャ爵洳σ", "安安", "亾.生缒.莍", "断线の风筝",
             "︷Ｋī︷Ｋǐ", "葉子葉子.花..", "み开心", "落/ǖā", "丛林深处", "小田鼠~", "隱形人○", "Rebelion", "海Ge", "小旧", "珊瑚虫", "Jennifer", "维维豆奶"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sky);
+        setContentView(R.layout.activity_share2);
 
         frameQuan = (FrameLayout) findViewById(R.id.fl_praise);
         frameZone = (FrameLayout) findViewById(R.id.fl_convert);
@@ -71,10 +84,16 @@ public class SkyActivity extends Activity {
         tvZoneSendTime = (TextView) findViewById(R.id.tv_convert_send_time);
         tvZoneTag = (TextView) findViewById(R.id.tv_zone_tag);
 
+        ivQuan = (ImageView) findViewById(R.id.iv_quan);
+        ivZone = (ImageView) findViewById(R.id.iv_zone);
+        rbGroup = (RadioGroup) findViewById(R.id.rb_group);
+        rbZone1 = (RadioButton) findViewById(R.id.rb_share1);
+        rbZone2 = (RadioButton) findViewById(R.id.rb_share2);
+
         etTag = (EditText) findViewById(R.id.et_tag);
         etClock = (EditText) findViewById(R.id.et_clock);
 
-        folder = new File(Environment.getExternalStorageDirectory().toString() + "/naruto/"
+        folder = new File(Environment.getExternalStorageDirectory().toString() + "/naruto/爱吾"
                 + dateFormat.format(new Date(System.currentTimeMillis())) + "/");
         if (!folder.exists()) {
             folder.mkdirs();
@@ -114,13 +133,12 @@ public class SkyActivity extends Activity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvZoneTag.setText(s);
-                tvQuanTag.setText(s);
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                setText();
             }
         });
 
@@ -142,6 +160,27 @@ public class SkyActivity extends Activity {
 
             }
         });
+
+
+        rbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_share1:
+                        folder_tag = "1";
+                        ivQuan.setImageResource(R.drawable.share_quan1);
+                        ivZone.setImageResource(R.drawable.share_zone1);
+                        break;
+                    case R.id.rb_share2:
+                        folder_tag = "2";
+                        ivQuan.setImageResource(R.drawable.share_quan2);
+                        ivZone.setImageResource(R.drawable.share_zone2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     private String getSendTimeStr() {
@@ -152,25 +191,37 @@ public class SkyActivity extends Activity {
         }
     }
 
+    private void setText(){
+        String str = etTag.getText() + getString(R.string.content_share2);
+        tag = new SpannableString(str);
+        tag2 = new SpannableString(str);
+        try {
+            int start = str.indexOf("http");
+            int end = start + 26;
+            tag.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tag2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.textColorBlueFuli2)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } catch (Exception e) {
+
+        }
+        tvQuanTag.setText(tag);
+        tvZoneTag.setText(tag2);
+    }
+
     private void setContent() {
         sysTime = timeFormat.format(new Date(System.currentTimeMillis()));
         sendTime = getSendTimeStr();
-        tag = etTag.getText().toString().trim();
-        if ("".equals(tag)) {
-            tag = dateFormat.format(new Date(System.currentTimeMillis()));
-        }
+        setText();
         setCommonZone();
         setCommonQuan();
     }
 
     private void setCommonZone() {
         tvZoneSysTime.setText(sysTime);
-        tvZoneTag.setText(tag);
         tvZoneSendTime.setText("今天" + sendTime);
 
         int count = (int) (10 + 3 * Math.random());
         StringBuffer sb = new StringBuffer();
-        int index = (int) (Math.random() * 4);
+        int index = converts.length - 1;
         for (int i = 0; i < count; i++) {
             if (i == 0) {
                 sb.append("     ");
@@ -178,14 +229,13 @@ public class SkyActivity extends Activity {
                 sb.append("、");
             }
             sb.append(converts[index]);
-            index += (int) (Math.random() * 4) + 1;
+            index -= ((int) (Math.random() * 4) + 1);
         }
         tvZoneList.setText(sb.toString());
     }
 
     private void setCommonQuan() {
         tvQuanSysTime.setText(sysTime);
-        tvQuanTag.setText(tag);
         tvQuanSendTime.setText(sendTime);
 
         int i1 = (int) (Math.random() * 4), i2 = i1 + 1 + (int) (Math.random() * 4), i3 = i2 + 1 + (int) (Math.random() * 3);
@@ -240,7 +290,7 @@ public class SkyActivity extends Activity {
     }
 
     public void saveBitmap(Bitmap bm, String name) throws IOException {
-        File f = new File(folder, name);
+        File f = new File(folder + "/" + folder_tag, name);
         if (f.exists()) {
             f.delete();
         }

@@ -32,6 +32,10 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity
+            android:name=".Share2Activity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        <activity
             android:name=".AiwuActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
