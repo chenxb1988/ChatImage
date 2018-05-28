@@ -58,7 +58,11 @@ public class Share2Activity extends Activity {
             "Y_Lam", "明", "向左’永垂不朽的偏爱", "胡炳昆", "回亿是曾经", "控制つ爱你", "她说", "一念永恒", "朝槿夕凉", "梧桐相待", "A0-隔壁老王",
             "LKF", "爱拼才会赢", "紫樱菲飞", "云~涧~水", "☆star&", "心&梦君", "小小舒", "丹里个丹", "蓝天", "LzHس钻戒", "心の始迹",
             "不要叫醒", "简单&爱", "涅槃", "暮光之城", "·风雨淋·", "～脚印～", "∮  瀛~", "ャ爵洳σ", "安安", "亾.生缒.莍", "断线の风筝",
-            "︷Ｋī︷Ｋǐ", "葉子葉子.花..", "み开心", "落/ǖā", "丛林深处", "小田鼠~", "隱形人○", "Rebelion", "海Ge", "小旧", "珊瑚虫", "Jennifer", "维维豆奶"};
+            "︷Ｋī︷Ｋǐ", "葉子葉子.花..", "み开心", "落/ǖā", "丛林深处", "小田鼠~", "隱形人○", "Rebelion", "海Ge", "小旧", "珊瑚虫", "Jennifer", "维维豆奶",
+            "旧梦太美只能半醒", "倾世年华 ╮只为等君一笑", "许我一场婚礼", "Red>>ReaL", "╳╲謿蓅寶寶.", "笨蛋式〞綬傷", "小强 ヾ姐姐", "开着拖拉机环游世界",
+            "优雅小男人", "＊唱着小調ιαi見що", "酒笙清栀", "最好的我,", "詼諧の愛", "无悔我心", "安与雪", "疯子一样的女纸", "┈┾洘驗乀",
+            "孤独的蔷薇", "灬丨珠峰王朝丨灬", "嗜血飞龙", "你比天空还遥远@", "听歌哭泣@", "﹏゛糖糖没有果★", "金叹和恩尚 !!!", "神经病有所好转 @",
+            "萌妹子的春天@", "俄讨厌喜欢伪装自己莪°", "Black girl .", "侢遇噹姩揂", "别逼我变形i"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,7 @@ public class Share2Activity extends Activity {
         etTag = (EditText) findViewById(R.id.et_tag);
         etClock = (EditText) findViewById(R.id.et_clock);
 
-        folder = new File(Environment.getExternalStorageDirectory().toString() + "/naruto/爱吾"
+        folder = new File(Environment.getExternalStorageDirectory().toString() + "/naruto/分享"
                 + dateFormat.format(new Date(System.currentTimeMillis())) + "/");
         if (!folder.exists()) {
             folder.mkdirs();
@@ -170,11 +174,13 @@ public class Share2Activity extends Activity {
                         folder_tag = "1";
                         ivQuan.setImageResource(R.drawable.share_quan1);
                         ivZone.setImageResource(R.drawable.share_zone1);
+                        setContent();
                         break;
                     case R.id.rb_share2:
                         folder_tag = "2";
                         ivQuan.setImageResource(R.drawable.share_quan2);
                         ivZone.setImageResource(R.drawable.share_zone2);
+                        setContent();
                         break;
                     default:
                         break;
@@ -191,7 +197,7 @@ public class Share2Activity extends Activity {
         }
     }
 
-    private void setText(){
+    private void setText() {
         String str = etTag.getText() + getString(R.string.content_share2);
         tag = new SpannableString(str);
         tag2 = new SpannableString(str);
@@ -219,9 +225,9 @@ public class Share2Activity extends Activity {
         tvZoneSysTime.setText(sysTime);
         tvZoneSendTime.setText("今天" + sendTime);
 
-        int count = (int) (10 + 3 * Math.random());
+        int count = (int) (12 + 3 * Math.random());
         StringBuffer sb = new StringBuffer();
-        int index = converts.length - 1;
+        int index = (int) (Math.random() * 5);
         for (int i = 0; i < count; i++) {
             if (i == 0) {
                 sb.append("     ");
@@ -229,7 +235,7 @@ public class Share2Activity extends Activity {
                 sb.append("、");
             }
             sb.append(converts[index]);
-            index -= ((int) (Math.random() * 4) + 1);
+            index += ((int) (Math.random() * 5) + 1);
         }
         tvZoneList.setText(sb.toString());
     }
@@ -290,7 +296,11 @@ public class Share2Activity extends Activity {
     }
 
     public void saveBitmap(Bitmap bm, String name) throws IOException {
-        File f = new File(folder + "/" + folder_tag, name);
+        File fo = new File(folder + "/" + folder_tag);
+        if (!fo.exists()) {
+            fo.mkdirs();
+        }
+        File f = new File(fo, name);
         if (f.exists()) {
             f.delete();
         }
