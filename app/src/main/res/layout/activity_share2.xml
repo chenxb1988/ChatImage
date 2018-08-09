@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="62dp"
-                android:layout_marginTop="397dp"
+                android:layout_marginTop="396dp"
                 android:text="10:33"
                 android:textColor="#99363636"
                 android:textSize="13sp"/>
